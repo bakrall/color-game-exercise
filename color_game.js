@@ -10,43 +10,39 @@ var numSquares = 6,
 
 init();
 
-resetButton.addEventListener("click", function() {
-	reset();
+resetButton.addEventListener("click", reset);
+
+modeButtons.forEach(function(item) {
+	item.addEventListener("click", changeDifficultyModes);
+});
+
+squares.forEach(function(item) {
+	item.addEventListener("click", chooseSquares);
 });
 
 function init() {
-	setupModeButtons();
-	setupSquareEvents();
 	reset();
 }
 
-function setupModeButtons() {
-	for(var i = 0; i < modeButtons.length; i++) {
-		modeButtons[i].addEventListener("click", function() {
-			modeButtons[0].classList.remove("selected");
-			modeButtons[1].classList.remove("selected");
-			this.classList.add("selected");
-			this.textContent === "easy" ? numSquares = 3 : numSquares = 6;
-			reset();
-		});
-	}
+function changeDifficultyModes() {
+	modeButtons[0].classList.remove("selected");
+	modeButtons[1].classList.remove("selected");
+	this.classList.add("selected");
+	this.textContent === "easy" ? numSquares = 3 : numSquares = 6;
+	reset();
 }
 
-function setupSquareEvents() {
-	for(var i = 0; i < squares.length; i++) {
-		squares[i].addEventListener("click", function() {
-			var clickedColor = this.style.backgroundColor;
+function chooseSquares() {
+	var clickedColor = this.style.backgroundColor;
 
-			if(clickedColor === winningColor) {
-				messageDisplay.textContent = "Correct!";
-				resetButton.textContent = "Play again?";
-				changeColors(clickedColor);
-				h1.style.backgroundColor = clickedColor;
-			} else {
-				this.style.backgroundColor = "#232323";
-				messageDisplay.textContent = "Try Again";
-			}
-		})
+	if(clickedColor === winningColor) {
+		messageDisplay.textContent = "Correct!";
+		resetButton.textContent = "Play again?";
+		changeColors(clickedColor);
+		h1.style.backgroundColor = clickedColor;
+	} else {
+		this.style.backgroundColor = "#232323";
+		messageDisplay.textContent = "Try Again";
 	}
 }
 
@@ -66,7 +62,7 @@ function reset() {
 		}
 	}
 
-	h1.style.backgroundColor = "steelblue";	
+	h1.style.backgroundColor = "#4682B4";	
 }
 
 function changeColors(color) {
